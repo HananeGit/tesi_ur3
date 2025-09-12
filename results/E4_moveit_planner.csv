@@ -1,0 +1,11 @@
+planner,ostacolo,goal_id,planning_time_s,success,note
+RRTConnect,no,1,,,
+RRTConnect,no,2,,,
+RRTConnect,no,3,,,
+RRTStar,no,1,,,
+RRTStar,no,2,,,
+RRTStar,no,3,,,
+RRTConnect,si,1,,,
+RRTConnect,si,2,,,
+RRTStar,si,1,,,
+RRTStar,si,2,,,

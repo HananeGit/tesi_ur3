@@ -1,0 +1,11 @@
+scenario,run,tempo_s,note
+rviz_solo,1,,
+rviz_solo,2,,
+rviz_solo,3,,
+rviz_solo,4,,
+rviz_solo,5,,
+moveit_fake,1,,
+moveit_fake,2,,
+moveit_fake,3,,
+moveit_fake,4,,
+moveit_fake,5,,

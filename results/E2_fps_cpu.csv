@@ -1,0 +1,5 @@
+script,modalita,fps_media,cpu_percent,note
+run_ur3_rviz.sh,normale,,,
+run_ur3_rviz.sh,software_render,,,
+run_ur3_moveit_fake.sh,normale,,,
+run_ur3_moveit_fake.sh,software_render,,,
