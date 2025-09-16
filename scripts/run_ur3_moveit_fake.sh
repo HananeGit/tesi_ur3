@@ -44,7 +44,7 @@ sleep 3
 # Avvia MoveIt 2 (apre RViz con MotionPlanning)
 echo "[*] Avvio MoveIt 2..."
 [ "$SOFT_RENDER" = "1" ] && export LIBGL_ALWAYS_SOFTWARE=1
-ros2 launch ur_moveit_config ur_moveit.launch.py \
+ros2 launch ur_moveit_config moveit.launch.py \
   ur_type:=${UR_TYPE} use_fake_hardware:=true
 
 # Quando chiudi RViz/MoveIt, spegni il driver
