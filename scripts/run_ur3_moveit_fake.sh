@@ -1,21 +1,18 @@
 #!/usr/bin/env bash
-# UR3 + ur_robot_driver (fake) + MoveIt 2 – pipeline "one-click"
+# Run UR3 + MoveIt 2 (fake hardware) con RViz
 set -e
 
 UR_TYPE="${1:-ur3}"               # ur3, ur3e, ...
 ROBOT_IP="${ROBOT_IP:-127.0.0.1}" # IP fittizio in fake hw
-SOFT_RENDER="${SOFT_RENDER:-0}"
+SOFT_RENDER="${SOFT_RENDER:-0}"   # 1 = forza rendering software
 
 # --- funzione per fare source in modo "safe" anche se nounset è attivo ---
 source_safe () {
   local had_nounset=0
-  # se -u è attivo, spegnilo temporaneamente
   case $- in *u*) had_nounset=1; set +u;; esac
-  # alcune installazioni richiedono questa variabile
   export AMENT_TRACE_SETUP_FILES=${AMENT_TRACE_SETUP_FILES:-0}
   # shellcheck disable=SC1090
   source "$1"
-  # riattiva -u se era attivo
   if [ "$had_nounset" -eq 1 ]; then set -u; fi
 }
 
@@ -26,12 +23,21 @@ if [ -f "$HOME/ur_ros2_ws/install/setup.bash" ]; then
 fi
 
 # Verifica pacchetti minimi
-ros2 pkg prefix ur_robot_driver >/dev/null
-ros2 pkg prefix ur_moveit_config >/dev/null
+ros2 pkg prefix ur_robot_driver     >/dev/null
+ros2 pkg prefix ur_moveit_config    >/dev/null
 
 # Chiudi eventuali istanze precedenti
-pkill -f "ur_control.launch.py" || true
-pkill -f "moveit.launch.py"     || true
+pkill -f "ur_control.launch.py"     || true
+pkill -f "ur_moveit.launch.py"      || true
+pkill -f "rviz2 -d"                 || true
+
+# Impostazioni grafica (Wayland/GNOME più stabile con xcb)
+export QT_QPA_PLATFORM=${QT_QPA_PLATFORM:-xcb}
+if [ "$SOFT_RENDER" = "1" ]; then
+  export LIBGL_ALWAYS_SOFTWARE=1
+else
+  unset LIBGL_ALWAYS_SOFTWARE || true
+fi
 
 # Avvia il driver (fake hardware) in background
 echo "[*] Avvio ur_robot_driver (fake hardware)..."
@@ -42,11 +48,11 @@ DRIVER_PID=$!
 sleep 3
 
 # Avvia MoveIt 2 (apre RViz con MotionPlanning)
-echo "[*] Avvio MoveIt 2..."
-[ "$SOFT_RENDER" = "1" ] && export LIBGL_ALWAYS_SOFTWARE=1
-ros2 launch ur_moveit_config moveit.launch.py \
-  ur_type:=${UR_TYPE} use_fake_hardware:=true
+echo "[*] Avvio MoveIt 2 (RViz si aprirà tra poco)..."
+ros2 launch ur_moveit_config ur_moveit.launch.py \
+  ur_type:=${UR_TYPE} launch_rviz:=true
 
 # Quando chiudi RViz/MoveIt, spegni il driver
 kill "$DRIVER_PID" 2>/dev/null || true
-echo "Chiuso. Log: /tmp/ur_driver_fake.log"
+echo "Chiuso. Log driver: /tmp/ur_driver_fake.log"
+
