@@ -1,9 +1,15 @@
 script,modalita,fps_media,cpu_percent,note
+run_ur3_rviz.sh,normale,,,
+run_ur3_rviz.sh,software_render,,,
+run_ur3_moveit_fake.sh,normale,,,
+run_ur3_moveit_fake.sh,software_render,,,
+run_ur3_rviz.sh,normale,,%wait,
 run_ur3_rviz.sh,normale,31,22.60,
 run_ur3_rviz.sh,software_render,31,32.70,
 run_ur3_moveit_fake.sh,normale,31,30.37,
+run_ur3_moveit_fake.sh,software_render,31,%wait,
 run_ur3_rviz.sh,normale,31,4.00,hw
 run_ur3_moveit_fake.sh,normale,31,3.90,hw
+run_ur3_moveit_fake.sh,normale,,10.10,hw
 run_ur3_moveit_fake.sh,normale,31,13.00,hw
 run_ur3_moveit_fake.sh,software_render,31,23.88,
-run_ur3_moveit_fake.sh,software_render,23,22.40,
