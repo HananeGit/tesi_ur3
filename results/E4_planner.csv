@@ -1,11 +1,11 @@
 planner,ostacolo,planning_time_s,success
-RRTConnect,no,5.010,0
-RRTConnect,no,0.020,1
+RRTConnect,no,5.01,0
+RRTConnect,no,0.02,1
 RRTConnect,no,0.018,1
 RRTConnect,no,0.018,1
 RRTConnect,no,0.021,1
 RRTStar,no,5.003,0
-RRTStar,no,5.010,1
+RRTStar,no,5.01,1
 RRTStar,no,5.002,1
 RRTStar,no,5.002,1
 RRTStar,no,5.001,1
